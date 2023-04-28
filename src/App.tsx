@@ -12,6 +12,7 @@ import Main from "./pages/Main";
 import Favorites from "./pages/Favorites";
 import MyBooks from "./pages/MyBooks";
 import ReadBooks from "./pages/ReadBooks";
+import ReadingNow from "./pages/ReadingNow";
 import SearchResultsPage from "./pages/SearchResultsPage";
 
 function App() {
@@ -25,13 +26,14 @@ function App() {
     <>
       <Router>
         <Header />
-        <main className="h-screen relative">
+        <main className="h-full relative md:grid md:grid-cols-4 md:grid-rows-4 gap-2 ">
           <Search />
           <Routes>
             <Route path="/" element={<Main />} />
             <Route path="/my-books" element={<MyBooks />} />
             <Route path="/my-books/favorites" element={<Favorites />} />
             <Route path="/my-books/read" element={<ReadBooks />} />
+            <Route path="/my-books/reading" element={<ReadingNow />} />
             <Route path="/search" element={<SearchResultsPage />} />
           </Routes>
           <Menu />

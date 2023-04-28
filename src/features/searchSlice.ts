@@ -42,8 +42,10 @@ const searchSlice = createSlice({
   extraReducers: {
     [getSearchResults.fulfilled.type]: (state, action) => {
       console.log(action.payload);
-      const books = action.payload.map(({ volumeInfo }: any) => volumeInfo);
-      state.searchResults = [...state.searchResults, ...books];
+      const books = action.payload.map((book: any) => {
+        return { ...book.volumeInfo, id: book.id };
+      });
+      state.searchResults = [...books];
     },
   },
 });

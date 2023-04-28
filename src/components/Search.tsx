@@ -21,7 +21,7 @@ const Search: React.FC = () => {
   };
 
   return (
-    <div className="flex items-center w-full justify-center p-4">
+    <div className="flex items-center w-full justify-center  p-4 md:col-span-3">
       <form
         className="flex items-center justify-center bg-slate-100 p-2 relative"
         onSubmit={submitHandler}

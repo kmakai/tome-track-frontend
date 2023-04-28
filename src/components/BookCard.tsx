@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 interface Props {
   volume: any;
@@ -8,17 +9,20 @@ const BookCard: React.FC<Props> = ({ volume }) => {
   return (
     <div key={volume.id} className="flex-1">
       {volume.imageLinks ? (
-        <img
-          src={volume.imageLinks.thumbnail}
-          alt={volume.title}
-          className="h-50"
-        />
+        <Link to={`/book/${volume.id}`}>
+          <img
+            src={volume.imageLinks.thumbnail}
+            alt={volume.title}
+            className="h-50"
+          />
+        </Link>
       ) : (
-        <div className="h-[100%]">
-          {volume.title} by: {volume.authors}
-        </div>
+        <Link to={`/book/${volume.id}`}>
+          <div className="h-[100%]">
+            {volume.title} by: {volume.authors}
+          </div>
+        </Link>
       )}
-      {/* <p>{volume.title}</p> */}
     </div>
   );
 };

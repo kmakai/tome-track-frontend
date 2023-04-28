@@ -12,6 +12,7 @@ import Main from "./pages/Main";
 import Favorites from "./pages/Favorites";
 import MyBooks from "./pages/MyBooks";
 import ReadBooks from "./pages/ReadBooks";
+import SearchResultsPage from "./pages/SearchResultsPage";
 
 function App() {
   const dispatch = useAppDispatch();
@@ -31,6 +32,7 @@ function App() {
             <Route path="/my-books" element={<MyBooks />} />
             <Route path="/my-books/favorites" element={<Favorites />} />
             <Route path="/my-books/read" element={<ReadBooks />} />
+            <Route path="/search" element={<SearchResultsPage />} />
           </Routes>
           <Menu />
         </main>

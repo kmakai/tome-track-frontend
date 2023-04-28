@@ -12,10 +12,10 @@ const initialState: SearchState = {
 
 export const getSearchResults = createAsyncThunk(
   "search/getSearchResults",
-  async () => {
+  async (query: string) => {
     try {
       const res = await axios.get(
-        `https://www.googleapis.com/books/v1/volumes?q=the+cat+in+the+hat`
+        `https://www.googleapis.com/books/v1/volumes?q=${query}&maxResults=10`
       );
 
       return res.data.items;

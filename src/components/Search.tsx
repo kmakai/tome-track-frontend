@@ -1,21 +1,23 @@
-import React from "react";
+import React, { useState } from "react";
 import { BiSearchAlt } from "react-icons/bi";
 import { useAppSelector, useAppDispatch } from "../hooks";
 import { useNavigate } from "react-router-dom";
-import { getSearchResults } from "../features/searchSlice";
+import { getSearchResults, clearResults } from "../features/searchSlice";
 
 const Search: React.FC = () => {
+  const [index, setIndex] = useState(0);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const submitHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
-    const query = formData.get("search");
+    const query = formData.get("search") as string;
 
     if (!query) return;
-
-    dispatch(getSearchResults(query as string));
-    navigate("/search");
+    dispatch(clearResults());
+    dispatch(getSearchResults({ query, index }));
+    setIndex(index + 10);
+    navigate(`/search#${query}`);
   };
 
   return (

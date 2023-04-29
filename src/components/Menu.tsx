@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 const Menu: React.FC = () => {
   return (
-    <div className="menu h-full absolute top-0 left-0  bg-slate-800 z-20 shadow-sm -translate-x-full transition-transform md:static md:translate-x-0 md:row-start-1 md:row-end-5 md:col-span-1 w-1/2  md:w-[80%]">
+    <div className="menu h-full w-1/2 absolute top-0 left-0  bg-slate-800 z-20 shadow-sm -translate-x-full transition-transform md:static md:translate-x-0 md:w-1/4">
       <ul className="menu-ul flex flex-col gap-4 p-4 text-white">
         <li>New Shelf</li>
         <hr />

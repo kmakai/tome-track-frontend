@@ -8,7 +8,7 @@ export const SearchResultsPage = () => {
   const dispatch = useAppDispatch();
   const [index, setIndex] = useState(0);
   return (
-    <div className="grid gap-4 h-full w-full col-start-2 col-end-5 grid-cols-3  md:row-start-2 md:row-end-5 md:grid-cols-5">
+    <div className="grid gap-4 h-full w-full col-start-2 col-end-5 grid-cols-3 md:grid-cols-5">
       {searchResults.map((result, index) => (
         <BookCard key={index} volume={result} />
       ))}

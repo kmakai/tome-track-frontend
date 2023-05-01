@@ -26,7 +26,7 @@ const GenreContainer: React.FC<{ title: string }> = ({ ...props }) => {
     <>
       <span className="capitalize font-bold">{props.title}</span>
       <hr className="my-4" />
-      <div className="flex flex-wrap gap-2 justify-center">
+      <div className="grid grid-cols-2 grid-rows-4 sm:flex  sm:flex-row flex-wrap gap-2 justify-center">
         {showing.length > 0 &&
           showing.map((volume) => <BookCard volume={volume} key={volume.id} />)}
         <button onClick={() => setShowing(genreBooks)}>View More</button>

@@ -13,6 +13,7 @@ import MyBooks from "./pages/MyBooks";
 import ReadBooks from "./pages/ReadBooks";
 import ReadingNow from "./pages/ReadingNow";
 import SearchResultsPage from "./pages/SearchResultsPage";
+import LoginPage from "./pages/LoginPage";
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
             <Search />
             <Routes>
               <Route path="/" element={<Main />} />
+              <Route path="/login" element={<LoginPage />} />
               <Route path="/book/:id" element={<BookPage />} />'
               <Route path="/my-books" element={<MyBooks />} />
               <Route path="/my-books/favorites" element={<Favorites />} />

@@ -9,7 +9,7 @@ const MyBookCard: React.FC<Props> = ({ volume }) => {
   return (
     <div key={volume.id} className="flex-1">
       {volume.imageLinks ? (
-        <Link to={`/book/${volume.id}`}>
+        <Link to={`/book/${volume.volumeId}`}>
           <img
             src={volume.imageLinks.thumbnail}
             alt={volume.title}

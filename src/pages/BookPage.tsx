@@ -8,6 +8,8 @@ const BookPage: React.FC = () => {
   const { id } = useParams();
   const dispatch = useAppDispatch();
   const { book } = useAppSelector((state) => state.search);
+  const { myBooks } = useAppSelector((state) => state.user);
+  const saved = myBooks.some((book) => book.volumeId === id);
 
   useEffect(() => {
     dispatch(getBook(id as string));
@@ -28,7 +30,22 @@ const BookPage: React.FC = () => {
       <div className="book-info container flex flex-col gap-4 ">
         <h1 className="title text-2xl">{book.title}</h1>
         <div>
-          <button onClick={saveBook}>Add to my books</button>
+          {!saved && <button onClick={saveBook}>Add to my books</button>}
+          {saved && (
+            <div className="flex gap-4">
+              <span>Add to: </span> <button>Favorites</button>
+              <button>reading now</button>
+              <button>read</button>
+              <label htmlFor="shelf">
+                put in a shelf:
+                <select name="shelf">
+                  <option value="1">shelf 1</option>
+                  <option value="2">shelf 2</option>
+                  <option value="3">shelf 3</option>
+                </select>{" "}
+              </label>
+            </div>
+          )}
         </div>
         <div className="book-cover flex gap-4">
           {book.imageLinks && <img src={book.imageLinks.thumbnail} alt="" />}

@@ -39,7 +39,7 @@ const userSlice = createSlice({
         email: action.payload.user.email,
       };
       state.myBooks = action.payload.user.myBooks;
-      state.favorites = action.payload.user.favoritesBooks;
+      state.favorites = action.payload.user.favoriteBooks;
       state.readBooks = action.payload.user.readBooks;
       state.readingNow = action.payload.user.readingNow;
       state.myShelves = action.payload.user.myShelves;

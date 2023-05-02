@@ -1,15 +1,20 @@
 import React from "react";
 import { login } from "../features/userSlice";
 import { useAppSelector, useAppDispatch } from "../hooks";
+import { useNavigate } from "react-router-dom";
 
 const LoginPage = () => {
   const dispatch = useAppDispatch();
+  const { user } = useAppSelector((state) => state.user);
+  const navigate = useNavigate();
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const email = e.currentTarget.email.value;
     const password = e.currentTarget.password.value;
     dispatch(login({ email, password }));
+    console.log(user);
+    navigate("/");
   };
 
   return (

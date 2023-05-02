@@ -47,6 +47,11 @@ const Menu: React.FC = () => {
             <hr />
             <li>My Shelves</li>
             <li>New Shelf</li>
+            <Link to="/login">
+              <li className="border-2 border-white text-white rounded-md p-1 text-center">
+                Log out
+              </li>
+            </Link>
           </>
         )}
       </ul>

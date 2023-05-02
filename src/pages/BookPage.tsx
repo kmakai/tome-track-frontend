@@ -9,7 +9,7 @@ const BookPage: React.FC = () => {
   const dispatch = useAppDispatch();
   const { book } = useAppSelector((state) => state.search);
   const { myBooks } = useAppSelector((state) => state.user);
-  const saved = myBooks.some((book) => book.volumeId === id);
+  const saved = myBooks.some((book: any) => book.volumeId === id);
 
   useEffect(() => {
     dispatch(getBook(id as string));

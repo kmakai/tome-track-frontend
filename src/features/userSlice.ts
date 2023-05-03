@@ -27,6 +27,23 @@ export const login = createAsyncThunk("user/login", async (formData: any) => {
   return response.data;
 });
 
+export const saveBook = createAsyncThunk(
+  "user/saveBook",
+  async ({ book, token }: { book: any; token: string }) => {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    const response = await axios.post(
+      "http://localhost:3000/api/v1/user/saveBook",
+      book,
+      config
+    );
+    return response.data;
+  }
+);
+
 const userSlice = createSlice({
   name: "user",
   initialState,
@@ -37,6 +54,7 @@ const userSlice = createSlice({
         id: action.payload.user._id,
         name: action.payload.user.name,
         email: action.payload.user.email,
+        token: action.payload.token,
       };
       state.myBooks = action.payload.user.myBooks;
       state.favorites = action.payload.user.favoriteBooks;

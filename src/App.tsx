@@ -4,6 +4,8 @@ import Search from "./components/Search";
 import "./index.css";
 
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from "./hooks";
+import { refreshState } from "./features/userSlice";
 
 import Menu from "./components/Menu";
 import Main from "./pages/Main";
@@ -14,8 +16,16 @@ import ReadBooks from "./pages/ReadBooks";
 import ReadingNow from "./pages/ReadingNow";
 import SearchResultsPage from "./pages/SearchResultsPage";
 import LoginPage from "./pages/LoginPage";
+import { useEffect } from "react";
 
 function App() {
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(refreshState());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <div className="min-h-full">
       <Router>

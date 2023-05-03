@@ -1,27 +1,30 @@
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { getBook } from "../features/searchSlice";
 import { useAppDispatch, useAppSelector } from "../hooks";
 import { useEffect } from "react";
 import axios from "axios";
+import { refreshState } from "../features/userSlice";
 
 const BookPage: React.FC = () => {
+  const navigate = useNavigate();
   const { id } = useParams();
   const dispatch = useAppDispatch();
   const { book } = useAppSelector((state) => state.search);
-  const { myBooks, user } = useAppSelector((state) => state.user);
+  const { myBooks, user, favorites, readBooks, readingNow } = useAppSelector(
+    (state) => state.user
+  );
   const saved = myBooks && myBooks.some((book: any) => book.volumeId === id);
+  const config = user && {
+    headers: {
+      Authorization: `Bearer ${user.token}`,
+    },
+  };
 
   useEffect(() => {
     dispatch(getBook(id as string));
   }, [dispatch, id]);
 
   const saveBook = async () => {
-    console.log("saved");
-    const config = {
-      headers: {
-        Authorization: `Bearer ${user.token}`,
-      },
-    };
     const res = await axios.post(
       "http://localhost:3000/api/v1/books/save",
       {
@@ -32,6 +35,53 @@ const BookPage: React.FC = () => {
     );
 
     console.log(res.data);
+  };
+
+  const addFavorite = async () => {
+    const res = await axios.post(
+      "http://localhost:3000/api/v1/books/favorite/add",
+      {
+        volumeId: id,
+      },
+      config
+    );
+
+    if (res.status === 200) {
+      dispatch(refreshState());
+      navigate("/my-books/favorites");
+    }
+  };
+
+  const removeFavorite = async () => {};
+
+  const addReadingNow = async () => {
+    const res = await axios.post(
+      "http://localhost:3000/api/v1/books/reading/add",
+      {
+        volumeId: id,
+      },
+      config
+    );
+
+    if (res.status === 200) {
+      dispatch(refreshState());
+      navigate("/my-books/reading");
+    }
+  };
+
+  const addRead = async () => {
+    const res = await axios.post(
+      "http://localhost:3000/api/v1/books/read/add",
+      {
+        volumeId: id,
+      },
+      config
+    );
+
+    if (res.status === 200) {
+      dispatch(refreshState());
+      navigate("/my-books/read");
+    }
   };
 
   return (
@@ -45,15 +95,33 @@ const BookPage: React.FC = () => {
           {saved && (
             <div className="flex gap-4 flex-wrap items-center text-lg">
               <span>Add to: </span>{" "}
-              <button className="border-2 border-white text-white rounded-md p-1 text-center bg-slate-800 px-2">
-                Favorites
-              </button>
-              <button className="border-2 border-white text-white rounded-md p-1 text-center bg-slate-800 px-2">
-                reading now
-              </button>
-              <button className="border-2 border-white text-white rounded-md p-1 text-center bg-slate-800 px-2">
-                read
-              </button>
+              {favorites.filter((book: any) => book.volumeId === id).length ===
+                0 && (
+                <button
+                  className="border-2 border-white text-white rounded-md p-1 text-center bg-slate-800 px-2"
+                  onClick={addFavorite}
+                >
+                  Favorites
+                </button>
+              )}
+              {readingNow.filter((book: any) => book.volumeId === id).length ===
+                0 && (
+                <button
+                  className="border-2 border-white text-white rounded-md p-1 text-center bg-slate-800 px-2"
+                  onClick={addReadingNow}
+                >
+                  reading now
+                </button>
+              )}
+              {readBooks.filter((book: any) => book.volumeId === id).length ===
+                0 && (
+                <button
+                  className="border-2 border-white text-white rounded-md p-1 text-center bg-slate-800 px-2"
+                  onClick={addRead}
+                >
+                  read
+                </button>
+              )}
               <label
                 htmlFor="shelf"
                 className="border-2 border-white text-white rounded-md p-1 text-center bg-slate-800 "

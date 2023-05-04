@@ -52,8 +52,6 @@ const BookPage: React.FC = () => {
     }
   };
 
-  const removeFavorite = async () => {};
-
   const addReadingNow = async () => {
     const res = await axios.post(
       "http://localhost:3000/api/v1/books/reading/add",
@@ -91,14 +89,21 @@ const BookPage: React.FC = () => {
           {book.title}
         </h1>
         <div>
-          {!saved && <button onClick={saveBook}>Add to my books</button>}
+          {!saved && (
+            <button
+              onClick={saveBook}
+              className="border-2 border-white text-white rounded-md p-1 text-center bg-slate-800 px-2 hover:bg-slate-700"
+            >
+              Add to my books
+            </button>
+          )}
           {saved && (
-            <div className="flex gap-4 flex-wrap items-center text-lg">
+            <div className="flex flex-col gap-2 md:flex-row flex-wrap items-start text-lg md:items-center">
               <span>Add to: </span>{" "}
               {favorites.filter((book: any) => book.volumeId === id).length ===
                 0 && (
                 <button
-                  className="border-2 border-white text-white rounded-md p-1 text-center bg-slate-800 px-2"
+                  className="border-2 border-white text-white rounded-md p-1 text-center bg-slate-800 px-2 hover:bg-slate-700"
                   onClick={addFavorite}
                 >
                   Favorites
@@ -107,7 +112,7 @@ const BookPage: React.FC = () => {
               {readingNow.filter((book: any) => book.volumeId === id).length ===
                 0 && (
                 <button
-                  className="border-2 border-white text-white rounded-md p-1 text-center bg-slate-800 px-2"
+                  className="border-2 border-white text-white rounded-md p-1 text-center bg-slate-800 px-2 hover:bg-slate-700"
                   onClick={addReadingNow}
                 >
                   reading now
@@ -116,7 +121,7 @@ const BookPage: React.FC = () => {
               {readBooks.filter((book: any) => book.volumeId === id).length ===
                 0 && (
                 <button
-                  className="border-2 border-white text-white rounded-md p-1 text-center bg-slate-800 px-2"
+                  className="border-2 border-white text-white rounded-md p-1 text-center bg-slate-800 px-2 hover:bg-slate-700"
                   onClick={addRead}
                 >
                   read
@@ -124,7 +129,7 @@ const BookPage: React.FC = () => {
               )}
               <label
                 htmlFor="shelf"
-                className="border-2 border-white text-white rounded-md p-1 text-center bg-slate-800 "
+                className="border-2 border-white text-white rounded-md p-1 text-center bg-slate-800 hover:bg-slate-700"
               >
                 put in a shelf:
                 <select name="shelf" className="bg-slate-700">

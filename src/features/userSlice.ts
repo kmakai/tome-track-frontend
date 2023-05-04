@@ -45,25 +45,24 @@ export const saveBook = createAsyncThunk(
   }
 );
 
-export const refreshState = createAsyncThunk(
-  "user/refreshState",
-  async (state) => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      const config = {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      };
-      const response = await axios.get(
-        "http://localhost:3000/api/v1/user/refresh",
-        config
-      );
-      response.data.token = token;
-      return response.data;
-    }
+export const refreshState = createAsyncThunk("user/refreshState", async () => {
+  const token = localStorage.getItem("token");
+  if (token) {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    const response = await axios.get(
+      "http://localhost:3000/api/v1/user/refresh",
+      config
+    );
+    response.data.token = token;
+    return response.data;
+  } else {
+    window.location.href = "/";
   }
-);
+});
 
 const userSlice = createSlice({
   name: "user",

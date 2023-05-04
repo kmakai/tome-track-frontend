@@ -11,7 +11,6 @@ const GenreContainer: React.FC<{ title: string }> = ({ ...props }) => {
       const res = await axios.get(
         `https://www.googleapis.com/books/v1/volumes?q=subject:${props.title}`
       );
-      console.log("get");
       const volumes = res.data.items.map((item: any) => {
         return { ...item.volumeInfo, id: item.id };
       });

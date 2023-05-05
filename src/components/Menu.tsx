@@ -45,8 +45,9 @@ const Menu: React.FC = () => {
               <Link to="/my-books/reading">Reading Now</Link>
             </li>
             <hr />
-            <li>My Shelves</li>
-            <li>New Shelf</li>
+            <li>
+              <Link to="/my-shelves">My Shelves</Link>
+            </li>
             <Link to="/login">
               <li className="border-2 border-white text-white rounded-md p-1 text-center">
                 Log out

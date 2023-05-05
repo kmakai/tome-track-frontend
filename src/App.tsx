@@ -16,13 +16,15 @@ import ReadBooks from "./pages/ReadBooks";
 import ReadingNow from "./pages/ReadingNow";
 import SearchResultsPage from "./pages/SearchResultsPage";
 import LoginPage from "./pages/LoginPage";
+import ShelvesPage from "./pages/ShelvesPage";
 import { useEffect } from "react";
 
 function App() {
   const dispatch = useAppDispatch();
+  const { user } = useAppSelector((state) => state.user);
 
   useEffect(() => {
-    dispatch(refreshState());
+    if (user == null) dispatch(refreshState());
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -42,6 +44,7 @@ function App() {
               <Route path="/my-books/read" element={<ReadBooks />} />
               <Route path="/my-books/reading" element={<ReadingNow />} />
               <Route path="/search" element={<SearchResultsPage />} />
+              <Route path="/my-shelves" element={<ShelvesPage />} />
             </Routes>
           </div>
           <Menu />

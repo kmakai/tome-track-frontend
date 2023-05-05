@@ -67,7 +67,11 @@ export const refreshState = createAsyncThunk("user/refreshState", async () => {
 const userSlice = createSlice({
   name: "user",
   initialState,
-  reducers: {},
+  reducers: {
+    addShelfToState(state, action) {
+      state.myShelves.push(action.payload);
+    },
+  },
   extraReducers(builder) {
     builder.addCase(login.fulfilled, (state, action) => {
       state.user = {
@@ -82,6 +86,7 @@ const userSlice = createSlice({
       state.readingNow = action.payload.user.readingNow;
       state.myShelves = action.payload.user.myShelves;
     });
+
     builder.addCase(refreshState.fulfilled, (state, action) => {
       console.log(action.payload);
       state.user = {
@@ -98,5 +103,7 @@ const userSlice = createSlice({
     });
   },
 });
+
+export const { addShelfToState } = userSlice.actions;
 
 export default userSlice.reducer;

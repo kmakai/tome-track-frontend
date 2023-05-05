@@ -55,18 +55,18 @@ const searchSlice = createSlice({
       state.searchResults = [];
     },
   },
-  extraReducers: {
-    [getSearchResults.fulfilled.type]: (state, action) => {
+  extraReducers(builder) {
+    builder.addCase(getSearchResults.fulfilled, (state, action) => {
       console.log(action.payload);
       const books = action.payload.map((book: any) => {
         return { ...book.volumeInfo, id: book.id };
       });
       state.searchResults = [...books];
-    },
-    [getBook.fulfilled.type]: (state, action) => {
-      console.log(action.payload);
+    });
+
+    builder.addCase(getBook.fulfilled, (state, action) => {
       state.book = { ...action.payload.volumeInfo, id: action.payload.id };
-    },
+    });
   },
 });
 

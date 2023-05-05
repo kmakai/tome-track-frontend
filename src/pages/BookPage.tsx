@@ -10,9 +10,8 @@ const BookPage: React.FC = () => {
   const { id } = useParams();
   const dispatch = useAppDispatch();
   const { book } = useAppSelector((state) => state.search);
-  const { myBooks, user, favorites, readBooks, readingNow } = useAppSelector(
-    (state) => state.user
-  );
+  const { myBooks, user, favorites, readBooks, readingNow, myShelves } =
+    useAppSelector((state) => state.user);
   const saved = myBooks && myBooks.some((book: any) => book.volumeId === id);
   const config = user && {
     headers: {
@@ -127,17 +126,31 @@ const BookPage: React.FC = () => {
                   read
                 </button>
               )}
-              <label
-                htmlFor="shelf"
-                className="border-2 border-white text-white rounded-md p-1 text-center bg-slate-800 hover:bg-slate-700"
-              >
-                put in a shelf:
-                <select name="shelf" className="bg-slate-700">
-                  <option value="1">shelf 1</option>
-                  <option value="2">shelf 2</option>
-                  <option value="3">shelf 3</option>
-                </select>{" "}
-              </label>
+              <div className="border-2 border-white text-white rounded-md p-1 text-center bg-slate-800 hover:bg-slate-700 relative">
+                <button
+                  className="bg-slate-800 px-2"
+                  onClick={() => {
+                    const shelvesContainer = document.querySelector(
+                      ".shelves"
+                    ) as HTMLElement;
+
+                    shelvesContainer.classList.toggle("hidden");
+                  }}
+                >
+                  put in a shelf
+                </button>{" "}
+                <div className="shelves border-2 border-white text-white rounded-md p-1 text-center bg-slate-800 hover:bg-slate-700 flex gap-2 flex-col absolute w-[80%] mt-2">
+                  {myShelves.length &&
+                    myShelves.map((shelf: any) => (
+                      <button
+                        className="hover:bg-slate-800"
+                        onClick={() => console.log(shelf._id)}
+                      >
+                        {shelf.name}
+                      </button>
+                    ))}
+                </div>
+              </div>
             </div>
           )}
         </div>

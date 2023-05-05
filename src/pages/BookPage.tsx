@@ -81,6 +81,24 @@ const BookPage: React.FC = () => {
     }
   };
 
+  const toggleShelf = () => {
+    const shelvesContainer = document.querySelector(".shelves") as HTMLElement;
+
+    shelvesContainer.classList.toggle("hidden");
+  };
+
+  const addToShelf = async (id: string) => {
+    const res = await axios.post(
+      `http://localhost:3000/api/v1/shelf/${id}/add`,
+      {
+        bookId: book.id,
+      },
+      config
+    );
+
+    console.log(res.data);
+  };
+
   return (
     <div className="book-page h-[100%] w-full gap-4 p-4 m-auto md:col-start-2 md:col-end-5 md:row-start-2 md:row-end-5 overflow-y-scroll">
       <div className="book-info container flex flex-col gap-4 ">
@@ -127,24 +145,19 @@ const BookPage: React.FC = () => {
                 </button>
               )}
               <div className="border-2 border-white text-white rounded-md p-1 text-center bg-slate-800 hover:bg-slate-700 relative">
-                <button
-                  className="bg-slate-800 px-2"
-                  onClick={() => {
-                    const shelvesContainer = document.querySelector(
-                      ".shelves"
-                    ) as HTMLElement;
-
-                    shelvesContainer.classList.toggle("hidden");
-                  }}
-                >
+                <button className="bg-slate-800 px-2" onClick={toggleShelf}>
                   put in a shelf
                 </button>{" "}
-                <div className="shelves border-2 border-white text-white rounded-md p-1 text-center bg-slate-800 hover:bg-slate-700 flex gap-2 flex-col absolute w-[80%] mt-2">
+                <div className="shelves border-2 border-white text-white rounded-md p-1 text-center bg-slate-800 hover:bg-slate-700 flex gap-2 flex-col absolute w-[80%] mt-2 hidden">
                   {myShelves.length &&
                     myShelves.map((shelf: any) => (
                       <button
+                        key={shelf._id}
                         className="hover:bg-slate-800"
-                        onClick={() => console.log(shelf._id)}
+                        onClick={() => {
+                          addToShelf(shelf._id);
+                          toggleShelf();
+                        }}
                       >
                         {shelf.name}
                       </button>

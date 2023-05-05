@@ -1,9 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { useAppSelector } from "../hooks";
+import { useAppSelector, useAppDispatch } from "../hooks";
+import { logOut } from "../features/userSlice";
 
 const Menu: React.FC = () => {
   const { user } = useAppSelector((state) => state.user);
+  const dispatch = useAppDispatch();
+
   const toggleMenu = (e: React.FormEvent) => {
     if ((e.target as HTMLElement).nodeName === "A") {
       const menu = document.querySelector(".menu");
@@ -50,7 +53,14 @@ const Menu: React.FC = () => {
             </li>
             <Link to="/login">
               <li className="border-2 border-white text-white rounded-md p-1 text-center">
-                Log out
+                <button
+                  onClick={() => {
+                    dispatch(logOut());
+                    window.location.href = "/";
+                  }}
+                >
+                  Log out
+                </button>
               </li>
             </Link>
           </>

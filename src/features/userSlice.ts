@@ -64,10 +64,39 @@ export const refreshState = createAsyncThunk("user/refreshState", async () => {
   }
 });
 
+export const refreshShelves = createAsyncThunk(
+  "user/refreshShelves",
+  async () => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
+      const res = await axios.get(
+        "http://localhost:3000/api/v1/shelf/getAll",
+        config
+      );
+
+      return res.data.shelves;
+    }
+  }
+);
+
 const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
+    logOut(state) {
+      state.user = null;
+      state.myBooks = null;
+      state.favorites = null;
+      state.readBooks = null;
+      state.readingNow = null;
+      state.myShelves = null;
+      localStorage.removeItem("token");
+    },
     addShelfToState(state, action) {
       state.myShelves.push(action.payload);
     },
@@ -101,9 +130,13 @@ const userSlice = createSlice({
       state.readingNow = action.payload.user.readingNow;
       state.myShelves = action.payload.user.myShelves;
     });
+
+    builder.addCase(refreshShelves.fulfilled, (state, action) => {
+      state.myShelves = action.payload;
+    });
   },
 });
 
-export const { addShelfToState } = userSlice.actions;
+export const { addShelfToState, logOut } = userSlice.actions;
 
 export default userSlice.reducer;

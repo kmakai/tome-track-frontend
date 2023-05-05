@@ -22,9 +22,12 @@ import { useEffect } from "react";
 function App() {
   const dispatch = useAppDispatch();
   const { user } = useAppSelector((state) => state.user);
+  const token = localStorage.getItem("token") || null;
 
   useEffect(() => {
-    if (user == null) dispatch(refreshState());
+    if (user == null && token != null) {
+      dispatch(refreshState());
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

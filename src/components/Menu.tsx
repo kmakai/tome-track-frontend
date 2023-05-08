@@ -28,7 +28,7 @@ const Menu: React.FC = () => {
 
             <Link to="/login">
               <li className="border-2 border-white text-white rounded-md p-1">
-                Log In
+                <button>Log In</button>
               </li>
             </Link>
           </>
@@ -51,12 +51,11 @@ const Menu: React.FC = () => {
             <li>
               <Link to="/my-shelves">My Shelves</Link>
             </li>
-            <Link to="/login">
+            <Link to="/">
               <li className="border-2 border-white text-white rounded-md p-1 text-center">
                 <button
                   onClick={() => {
                     dispatch(logOut());
-                    window.location.href = "/";
                   }}
                 >
                   Log out

@@ -1,5 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import { toast } from "react-toastify";
+import { IBook } from "../interfaces";
 
 interface UserState {
   user: any;
@@ -181,6 +183,7 @@ const userSlice = createSlice({
   },
   extraReducers(builder) {
     builder.addCase(login.fulfilled, (state, action) => {
+      toast.success("Login Successful");
       state.user = {
         id: action.payload.user._id,
         name: action.payload.user.name,

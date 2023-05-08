@@ -17,7 +17,7 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="login-page flex items-center flex-col h-screen">
+    <div className="login-page flex items-center flex-col h-screen items">
       <form
         onSubmit={handleSubmit}
         className="login-form border-2 border-slate-300 rounded-md p-8 shadow-md flex flex-col items-center gap-4"
@@ -41,6 +41,20 @@ const LoginPage = () => {
           Login
         </button>
       </form>
+
+      <div className="flex flex-col gap-2 items-center p-4">
+        <span className="text-xl font-bold text-slate-500">New Account</span>
+        <button className="border border-slate-300 rounded-md w-full py-2 bg-slate-700 text-white hover:bg-slate-600 focus:outline-none focus:ring-2 focus:ring-slate-600 focus:ring-offset-2 focus:ring-offset-  text-xl p-3">
+          Register
+        </button>
+      </div>
+
+      <div className="flex flex-col gap-2 items-center p-4">
+        <span className="text-xl font-bold text-slate-500">try it out</span>
+        <button className="border border-slate-300 rounded-md w-full py-2 bg-slate-700 text-white hover:bg-slate-600 focus:outline-none focus:ring-2 focus:ring-slate-600 focus:ring-offset-2 focus:ring-offset-  text-xl p-3">
+          Guest Login
+        </button>
+      </div>
     </div>
   );
 };

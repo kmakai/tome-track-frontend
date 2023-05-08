@@ -1,14 +1,15 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import { IBook } from "../interfaces";
 
 type SearchState = {
-  searchResults: any[];
-  book: any;
+  searchResults: IBook[];
+  book: IBook;
 };
 
 const initialState: SearchState = {
   searchResults: [],
-  book: {},
+  book: {} as IBook,
 };
 
 type SearchQuery = {
@@ -58,7 +59,7 @@ const searchSlice = createSlice({
   extraReducers(builder) {
     builder.addCase(getSearchResults.fulfilled, (state, action) => {
       const books = action.payload.map((book: any) => {
-        return { ...book.volumeInfo, id: book.id };
+        return { ...book.volumeInfo, id: book.id } as IBook;
       });
       state.searchResults = [...books];
     });

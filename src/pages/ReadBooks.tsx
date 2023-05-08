@@ -3,14 +3,13 @@ import MyBookCard from "../components/MyBookCard";
 import { useAppSelector, useAppDispatch } from "../hooks";
 import axios from "axios";
 import { refreshReadBooks } from "../features/userSlice";
-import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { IBook } from "../interfaces";
 
 const ReadBooks: React.FC = () => {
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
   const { readBooks } = useAppSelector((state) => state.user);
-  const { token } = useAppSelector((state) => state.user.user);
+  const token = useAppSelector((state) => state.user.user?.token);
 
   const removeRead = async (id: string) => {
     const config = {
@@ -45,17 +44,18 @@ const ReadBooks: React.FC = () => {
     <>
       <h2>Books Read</h2>
       <div className="w-full grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 p-4 justify-items-center">
-        {readBooks.map((book: any) => (
-          <div className="flex flex-col" key={book.volumeId}>
-            <MyBookCard key={book.volumeId} volume={book} />
-            <button
-              className="border-2 border-white text-white rounded-md p-1 text-center bg-slate-800 px-2 hover:bg-slate-700"
-              onClick={() => removeRead(book._id)}
-            >
-              remove
-            </button>
-          </div>
-        ))}
+        {readBooks &&
+          readBooks.map((book: IBook) => (
+            <div className="flex flex-col" key={book.volumeId}>
+              <MyBookCard key={book.volumeId} volume={book} />
+              <button
+                className="border-2 border-white text-white rounded-md p-1 text-center bg-slate-800 px-2 hover:bg-slate-700"
+                onClick={() => book._id && removeRead(book._id)}
+              >
+                remove
+              </button>
+            </div>
+          ))}
       </div>
     </>
   );

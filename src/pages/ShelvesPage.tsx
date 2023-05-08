@@ -4,11 +4,12 @@ import Shelf from "../components/Shelf";
 import axios from "axios";
 import { refreshShelves } from "../features/userSlice";
 import { toast } from "react-toastify";
+import { IShelf } from "../interfaces";
 
 const ShelvesPage: React.FC = () => {
   const dispatch = useAppDispatch();
   const { myShelves } = useAppSelector((state) => state.user);
-  const { token } = useAppSelector((state) => state.user.user);
+  const token = useAppSelector((state) => state.user.user?.token) || null;
   const config = {
     headers: {
       Authorization: `Bearer ${token}`,
@@ -95,7 +96,7 @@ const ShelvesPage: React.FC = () => {
       </div>
       <div className="shelves-container grid sm:grid-cols-2  md:grid-cols-2 lg:grid-cols-3 gap-2">
         {myShelves &&
-          myShelves.map((shelf: any, index: number) => (
+          myShelves.map((shelf: IShelf, index: number) => (
             <Shelf key={index} shelf={shelf} />
           ))}
       </div>

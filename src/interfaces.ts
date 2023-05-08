@@ -1,4 +1,6 @@
 export interface IBook {
+  _id?: string;
+  id?: string;
   volumeId: string;
   title: string;
   subtitle: string;
@@ -34,4 +36,19 @@ export interface IBook {
   previewLink: string;
   infoLink: string;
   canonicalVolumeLink: string;
+}
+
+export interface IUser {
+  id: string;
+  name: string;
+  email: string;
+  token: string;
+}
+
+export interface IShelf {
+  _id: string;
+  name: string;
+  description: string;
+  books: IBook[];
+  userId: string;
 }

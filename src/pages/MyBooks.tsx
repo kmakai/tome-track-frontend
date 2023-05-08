@@ -8,9 +8,8 @@ import { toast } from "react-toastify";
 
 const MyBooks: React.FC = () => {
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
   const MyBooks = useAppSelector((state) => state.user.myBooks);
-  const { token } = useAppSelector((state) => state.user.user);
+  const token = useAppSelector((state) => state.user.user?.token);
 
   const removeFromMyBooks = async (id: string) => {
     const config = {

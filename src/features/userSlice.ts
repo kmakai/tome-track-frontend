@@ -1,15 +1,15 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { toast } from "react-toastify";
-import { IBook } from "../interfaces";
+import { IBook, IShelf, IUser } from "../interfaces";
 
 interface UserState {
-  user: any;
-  myBooks: any;
-  favorites: any;
-  readBooks: any;
-  readingNow: any;
-  myShelves: any;
+  user: IUser | null;
+  myBooks: IBook[] | null;
+  favorites: IBook[] | null;
+  readBooks: IBook[] | null;
+  readingNow: IBook[] | null;
+  myShelves: IShelf[] | null;
 }
 
 const initialState: UserState = {
@@ -21,18 +21,21 @@ const initialState: UserState = {
   myShelves: null,
 };
 
-export const login = createAsyncThunk("user/login", async (formData: any) => {
-  const response = await axios.post(
-    "http://localhost:3000/api/v1/user/login",
-    formData
-  );
-  localStorage.setItem("token", response.data.token);
-  return response.data;
-});
+export const login = createAsyncThunk(
+  "user/login",
+  async (formData: { email: string; password: string }) => {
+    const response = await axios.post(
+      "http://localhost:3000/api/v1/user/login",
+      formData
+    );
+    localStorage.setItem("token", response.data.token);
+    return response.data;
+  }
+);
 
 export const saveBook = createAsyncThunk(
   "user/saveBook",
-  async ({ book, token }: { book: any; token: string }) => {
+  async ({ book, token }: { book: IBook; token: string }) => {
     const config = {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -177,9 +180,6 @@ const userSlice = createSlice({
       localStorage.removeItem("token");
       localStorage.removeItem("persist:root");
     },
-    addShelfToState(state, action) {
-      state.myShelves.push(action.payload);
-    },
   },
   extraReducers(builder) {
     builder.addCase(login.fulfilled, (state, action) => {
@@ -230,6 +230,6 @@ const userSlice = createSlice({
   },
 });
 
-export const { addShelfToState, logOut } = userSlice.actions;
+export const { logOut } = userSlice.actions;
 
 export default userSlice.reducer;

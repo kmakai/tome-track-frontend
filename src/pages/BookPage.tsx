@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import axios from "axios";
 import { refreshState } from "../features/userSlice";
 import { toast } from "react-toastify";
+import { IBook, IShelf } from "../interfaces";
 
 const BookPage: React.FC = () => {
   const navigate = useNavigate();
@@ -13,8 +14,8 @@ const BookPage: React.FC = () => {
   const { book } = useAppSelector((state) => state.search);
   const { myBooks, user, favorites, readBooks, readingNow, myShelves } =
     useAppSelector((state) => state.user);
-  const saved = myBooks && myBooks.some((book: any) => book.volumeId === id);
-  const config = user && {
+  const saved = myBooks && myBooks.some((book: IBook) => book.volumeId === id);
+  const config: any = user && {
     headers: {
       Authorization: `Bearer ${user.token}`,
     },
@@ -34,7 +35,7 @@ const BookPage: React.FC = () => {
       config
     );
 
-    toast.success("Book Saved");
+    toast.success(res.data.message);
     navigate(-1);
   };
 
@@ -119,40 +120,43 @@ const BookPage: React.FC = () => {
           {saved && (
             <div className="flex flex-col gap-2 md:flex-row flex-wrap items-start text-lg md:items-center">
               <span>Add to: </span>{" "}
-              {favorites.filter((book: any) => book.volumeId === id).length ===
-                0 && (
-                <button
-                  className="border-2 border-white text-white rounded-md p-1 text-center bg-slate-800 px-2 hover:bg-slate-700"
-                  onClick={addFavorite}
-                >
-                  Favorites
-                </button>
-              )}
-              {readingNow.filter((book: any) => book.volumeId === id).length ===
-                0 && (
-                <button
-                  className="border-2 border-white text-white rounded-md p-1 text-center bg-slate-800 px-2 hover:bg-slate-700"
-                  onClick={addReadingNow}
-                >
-                  reading now
-                </button>
-              )}
-              {readBooks.filter((book: any) => book.volumeId === id).length ===
-                0 && (
-                <button
-                  className="border-2 border-white text-white rounded-md p-1 text-center bg-slate-800 px-2 hover:bg-slate-700"
-                  onClick={addRead}
-                >
-                  read
-                </button>
-              )}
+              {favorites &&
+                favorites.filter((book: IBook) => book.volumeId === id)
+                  .length === 0 && (
+                  <button
+                    className="border-2 border-white text-white rounded-md p-1 text-center bg-slate-800 px-2 hover:bg-slate-700"
+                    onClick={addFavorite}
+                  >
+                    Favorites
+                  </button>
+                )}
+              {readingNow &&
+                readingNow.filter((book: IBook) => book.volumeId === id)
+                  .length === 0 && (
+                  <button
+                    className="border-2 border-white text-white rounded-md p-1 text-center bg-slate-800 px-2 hover:bg-slate-700"
+                    onClick={addReadingNow}
+                  >
+                    reading now
+                  </button>
+                )}
+              {readBooks &&
+                readBooks.filter((book: IBook) => book.volumeId === id)
+                  .length === 0 && (
+                  <button
+                    className="border-2 border-white text-white rounded-md p-1 text-center bg-slate-800 px-2 hover:bg-slate-700"
+                    onClick={addRead}
+                  >
+                    read
+                  </button>
+                )}
               <div className="border-2 border-white text-white rounded-md p-1 text-center bg-slate-800 hover:bg-slate-700 relative">
                 <button className="bg-slate-800 px-2" onClick={toggleShelf}>
                   put in a shelf
                 </button>{" "}
                 <div className="shelves border-2 border-white text-white rounded-md p-1 text-center bg-slate-800 hover:bg-slate-700 flex gap-2 flex-col absolute w-[80%] mt-2 hidden">
-                  {myShelves.length &&
-                    myShelves.map((shelf: any) => (
+                  {myShelves &&
+                    myShelves.map((shelf: IShelf) => (
                       <button
                         key={shelf._id}
                         className="hover:bg-slate-800"

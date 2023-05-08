@@ -3,9 +3,12 @@ import MyBookCard from "../components/MyBookCard";
 import { useAppSelector, useAppDispatch } from "../hooks";
 import axios from "axios";
 import { refreshReadingNow } from "../features/userSlice";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const ReadingNow: React.FC = () => {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const { readingNow } = useAppSelector((state) => state.user);
   const { token } = useAppSelector((state) => state.user.user);
 
@@ -16,15 +19,22 @@ const ReadingNow: React.FC = () => {
       },
     };
 
-    const res = await axios.patch(
-      "http://localhost:3000/api/v1/books/reading/remove",
-      {
-        id: id,
-      },
-      config
-    );
+    try {
+      const res = await axios.patch(
+        "http://localhost:3000/api/v1/books/reading/remove",
+        {
+          id: id,
+        },
+        config
+      );
 
-    if (res.status === 200) console.log(res.data.message);
+      if (res.status === 200) toast.success(res.data.message);
+      setTimeout(() => {
+        dispatch(refreshReadingNow());
+      }, 1000);
+    } catch (error: any) {
+      toast.error(error.response.data.message);
+    }
   };
 
   useEffect(() => {

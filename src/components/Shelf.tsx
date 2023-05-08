@@ -2,8 +2,10 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import MyBookCard from "./MyBookCard";
 import { BsFillTrash3Fill } from "react-icons/bs";
-import { useAppSelector } from "../hooks";
+import { useAppSelector, useAppDispatch } from "../hooks";
 import axios from "axios";
+import { toast } from "react-toastify";
+import { refreshShelves } from "../features/userSlice";
 
 interface shelfProps {
   shelf: any;
@@ -11,6 +13,7 @@ interface shelfProps {
 
 const Shelf: React.FC<shelfProps> = ({ shelf }) => {
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
 
   const { user } = useAppSelector((state) => state.user);
   const config = user && {
@@ -26,9 +29,10 @@ const Shelf: React.FC<shelfProps> = ({ shelf }) => {
       config
     );
 
-    console.log(res.data);
-
-    if (res.status === 200) navigate(0);
+    if (res.status === 200) {
+      toast(res.data.message);
+      dispatch(refreshShelves());
+    }
   };
 
   const deleteShelf = async (id: string) => {

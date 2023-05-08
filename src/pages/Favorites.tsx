@@ -3,9 +3,12 @@ import MyBookCard from "../components/MyBookCard";
 import { useAppSelector, useAppDispatch } from "../hooks";
 import axios from "axios";
 import { refreshFavorites } from "../features/userSlice";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 const Favorites: React.FC = () => {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const { favorites } = useAppSelector((state) => state.user);
   const { token } = useAppSelector((state) => state.user.user);
 
@@ -16,15 +19,22 @@ const Favorites: React.FC = () => {
       },
     };
 
-    const res = await axios.patch(
-      "http://localhost:3000/api/v1/books/favorite/remove",
-      {
-        id: id,
-      },
-      config
-    );
+    try {
+      const res = await axios.patch(
+        "http://localhost:3000/api/v1/books/favorite/remove",
+        {
+          id: id,
+        },
+        config
+      );
 
-    if (res.status === 200) console.log(res.data.message);
+      if (res.status === 200) toast.success(res.data.message);
+      setTimeout(() => {
+        dispatch(refreshFavorites());
+      }, 1500);
+    } catch (error: any) {
+      toast.error(error?.response?.data?.message);
+    }
   };
 
   useEffect(() => {

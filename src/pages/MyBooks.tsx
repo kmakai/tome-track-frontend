@@ -4,6 +4,7 @@ import axios from "axios";
 import { useEffect } from "react";
 import { refreshMyBooks } from "../features/userSlice";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const MyBooks: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -18,15 +19,22 @@ const MyBooks: React.FC = () => {
       },
     };
 
-    const res = await axios.patch(
-      "http://localhost:3000/api/v1/books/delete",
-      {
-        id: id,
-      },
-      config
-    );
+    try {
+      const res = await axios.patch(
+        "http://localhost:3000/api/v1/books/delete",
+        {
+          id: id,
+        },
+        config
+      );
 
-    if (res.status === 200) console.log(res.data.message);
+      if (res.status === 200) toast.success(res.data.message);
+      setTimeout(() => {
+        dispatch(refreshMyBooks());
+      }, 1500);
+    } catch (error: any) {
+      toast.error(error.response.data.message);
+    }
   };
 
   useEffect(() => {
@@ -45,7 +53,6 @@ const MyBooks: React.FC = () => {
                 className="border-2 border-white text-white rounded-md p-1 text-center bg-slate-800 px-2 hover:bg-slate-700"
                 onClick={() => {
                   removeFromMyBooks(book._id);
-                  navigate(0);
                 }}
               >
                 remove

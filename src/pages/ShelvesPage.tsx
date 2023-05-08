@@ -2,8 +2,8 @@ import { useEffect } from "react";
 import { useAppSelector, useAppDispatch } from "../hooks";
 import Shelf from "../components/Shelf";
 import axios from "axios";
-import { addShelfToState } from "../features/userSlice";
 import { refreshShelves } from "../features/userSlice";
+import { toast } from "react-toastify";
 
 const ShelvesPage: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -22,7 +22,6 @@ const ShelvesPage: React.FC = () => {
       name: formData.get("name") as string,
       description: formData.get("description") as string,
     };
-    // TODO: Add shelf to database
 
     const res = await axios.post(
       "http://localhost:3000/api/v1/shelf/create",
@@ -30,9 +29,10 @@ const ShelvesPage: React.FC = () => {
       config
     );
 
-    // TODO: Add shelf to state
     if (res.status === 201) {
-      dispatch(addShelfToState(res.data.bookShelf));
+      toast.success("Shelf Created");
+
+      dispatch(refreshShelves());
     }
   };
 

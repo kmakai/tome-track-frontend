@@ -2,7 +2,9 @@ import "./App.css";
 import Header from "./components/Header";
 import Search from "./components/Search";
 import "./index.css";
+import "react-toastify/dist/ReactToastify.css";
 
+import { ToastContainer } from "react-toastify";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "./hooks";
 import { refreshState } from "./features/userSlice";
@@ -53,6 +55,18 @@ function App() {
           <Menu />
         </main>
       </Router>
+      <ToastContainer
+        position="top-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+      />
     </div>
   );
 }

@@ -4,6 +4,7 @@ import { useAppDispatch, useAppSelector } from "../hooks";
 import { useEffect } from "react";
 import axios from "axios";
 import { refreshState } from "../features/userSlice";
+import { toast } from "react-toastify";
 
 const BookPage: React.FC = () => {
   const navigate = useNavigate();
@@ -33,7 +34,7 @@ const BookPage: React.FC = () => {
       config
     );
 
-    console.log(res.data);
+    toast.success("Book Saved");
     navigate(-1);
   };
 
@@ -97,7 +98,7 @@ const BookPage: React.FC = () => {
       config
     );
 
-    console.log(res.data);
+    if (res.status === 200) toast.success("Added to shelf");
   };
 
   return (

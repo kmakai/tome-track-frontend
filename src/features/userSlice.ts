@@ -195,7 +195,6 @@ const userSlice = createSlice({
     });
 
     builder.addCase(refreshState.fulfilled, (state, action) => {
-      console.log(action.payload);
       state.user = {
         id: action.payload.user._id,
         name: action.payload.user.name,

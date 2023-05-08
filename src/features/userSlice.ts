@@ -84,6 +84,83 @@ export const refreshShelves = createAsyncThunk(
   }
 );
 
+export const refreshMyBooks = createAsyncThunk(
+  "user/refreshMyBooks",
+  async () => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
+      const res = await axios.get(
+        "http://localhost:3000/api/v1/user/myBooks",
+        config
+      );
+      return res.data.books;
+    }
+  }
+);
+
+export const refreshReadBooks = createAsyncThunk(
+  "user/refreshReadBooks",
+  async () => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
+      const res = await axios.get(
+        "http://localhost:3000/api/v1/user/readBooks",
+        config
+      );
+      return res.data.books;
+    }
+  }
+);
+
+export const refreshFavorites = createAsyncThunk(
+  "user/refreshFavorites",
+  async () => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
+      const res = await axios.get(
+        "http://localhost:3000/api/v1/user/myFavorites",
+        config
+      );
+      return res.data.books;
+    }
+  }
+);
+
+export const refreshReadingNow = createAsyncThunk(
+  "user/refreshReadingNow",
+  async () => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
+      const res = await axios.get(
+        "http://localhost:3000/api/v1/user/readingNow",
+        config
+      );
+      return res.data.books;
+    }
+  }
+);
+
+/// Shelf Management reducers
 const userSlice = createSlice({
   name: "user",
   initialState,
@@ -96,6 +173,7 @@ const userSlice = createSlice({
       state.readingNow = null;
       state.myShelves = null;
       localStorage.removeItem("token");
+      localStorage.removeItem("persist:root");
     },
     addShelfToState(state, action) {
       state.myShelves.push(action.payload);
@@ -133,6 +211,19 @@ const userSlice = createSlice({
 
     builder.addCase(refreshShelves.fulfilled, (state, action) => {
       state.myShelves = action.payload;
+    });
+    0;
+    builder.addCase(refreshMyBooks.fulfilled, (state, action) => {
+      state.myBooks = action.payload;
+    });
+    builder.addCase(refreshFavorites.fulfilled, (state, action) => {
+      state.favorites = action.payload;
+    });
+    builder.addCase(refreshReadBooks.fulfilled, (state, action) => {
+      state.readBooks = action.payload;
+    });
+    builder.addCase(refreshReadingNow.fulfilled, (state, action) => {
+      state.readingNow = action.payload;
     });
   },
 });

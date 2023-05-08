@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 import MyBookCard from "../components/MyBookCard";
-import { useAppSelector } from "../hooks";
+import { useAppSelector, useAppDispatch } from "../hooks";
 import axios from "axios";
+import { refreshReadBooks } from "../features/userSlice";
 
 const ReadBooks: React.FC = () => {
+  const dispatch = useAppDispatch();
   const { readBooks } = useAppSelector((state) => state.user);
   const { token } = useAppSelector((state) => state.user.user);
 
@@ -24,6 +26,10 @@ const ReadBooks: React.FC = () => {
 
     if (res.status === 200) console.log(res.data.message);
   };
+
+  useEffect(() => {
+    dispatch(refreshReadBooks());
+  }, [dispatch]);
 
   return (
     <>

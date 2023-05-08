@@ -34,6 +34,7 @@ const BookPage: React.FC = () => {
     );
 
     console.log(res.data);
+    navigate(-1);
   };
 
   const addFavorite = async () => {

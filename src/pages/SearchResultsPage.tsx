@@ -14,8 +14,9 @@ export const SearchResultsPage = () => {
       ))}
 
       {searchResults.length > 0 && (
-        <div className="flex justify-between ">
+        <div className="flex justify-between h-10">
           <button
+            className="border-2 border-white text-white rounded-md p-1 text-center bg-slate-800 px-2 hover:bg-slate-700"
             onClick={() => {
               setIndex((prev) => (prev === 0 ? prev : prev - 10));
               const query = window.location.href.split("#")[1];
@@ -25,6 +26,7 @@ export const SearchResultsPage = () => {
             prev page
           </button>
           <button
+            className="border-2 border-white text-white rounded-md p-1 text-center bg-slate-800 px-2 hover:bg-slate-700"
             onClick={() => {
               setIndex((prev) => prev + 10);
               const query = window.location.href.split("#")[1];

@@ -57,7 +57,6 @@ const searchSlice = createSlice({
   },
   extraReducers(builder) {
     builder.addCase(getSearchResults.fulfilled, (state, action) => {
-      console.log(action.payload);
       const books = action.payload.map((book: any) => {
         return { ...book.volumeInfo, id: book.id };
       });

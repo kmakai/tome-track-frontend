@@ -5,7 +5,7 @@ import axios from "axios";
 import { refreshShelves } from "../features/userSlice";
 import { toast } from "react-toastify";
 import { IShelf } from "../interfaces";
-const API_URI = "http://localhost:3000/api/v1";
+const API_URI = "https://tome-track-backend-production.up.railway.app/api/v1";
 const ShelvesPage: React.FC = () => {
   const dispatch = useAppDispatch();
   const { myShelves } = useAppSelector((state) => state.user);

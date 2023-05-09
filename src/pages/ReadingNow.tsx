@@ -5,7 +5,7 @@ import axios from "axios";
 import { refreshReadingNow } from "../features/userSlice";
 import { toast } from "react-toastify";
 import { IBook } from "../interfaces";
-const API_URI = "http://localhost:3000/api/v1";
+const API_URI = "https://tome-track-backend-production.up.railway.app/api/v1";
 const ReadingNow: React.FC = () => {
   const dispatch = useAppDispatch();
   const { readingNow } = useAppSelector((state) => state.user);

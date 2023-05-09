@@ -3,7 +3,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { IBook, IShelf, IUser } from "../interfaces";
 
-const API_URI = "http://localhost:3000/api/v1";
+const API_URI = "https://tome-track-backend-production.up.railway.app/api/v1";
 
 interface UserState {
   user: IUser | null;

@@ -15,9 +15,9 @@ const BookPage: React.FC = () => {
   const { myBooks, user, favorites, readBooks, readingNow, myShelves } =
     useAppSelector((state) => state.user);
   const saved = myBooks && myBooks.some((book: IBook) => book.volumeId === id);
-  const config: any = user && {
+  const config = {
     headers: {
-      Authorization: `Bearer ${user.token}`,
+      Authorization: `Bearer ${user?.token}`,
     },
   };
 
@@ -88,6 +88,7 @@ const BookPage: React.FC = () => {
     const shelvesContainer = document.querySelector(".shelves") as HTMLElement;
 
     shelvesContainer.classList.toggle("hidden");
+    shelvesContainer.classList.toggle("flex");
   };
 
   const addToShelf = async (id: string) => {
@@ -154,7 +155,7 @@ const BookPage: React.FC = () => {
                 <button className="bg-slate-800 px-2" onClick={toggleShelf}>
                   put in a shelf
                 </button>{" "}
-                <div className="shelves border-2 border-white text-white rounded-md p-1 text-center bg-slate-800 hover:bg-slate-700 flex gap-2 flex-col absolute w-[80%] mt-2 hidden">
+                <div className="shelves border-2 border-white text-white rounded-md p-1 text-center bg-slate-800 hover:bg-slate-700 gap-2 flex-col absolute w-[80%] mt-2 hidden">
                   {myShelves &&
                     myShelves.map((shelf: IShelf) => (
                       <button

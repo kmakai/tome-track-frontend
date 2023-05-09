@@ -41,6 +41,7 @@ const ShelvesPage: React.FC = () => {
     const form = document.getElementById("new-shelf-form") as HTMLFormElement;
 
     form.classList.toggle("hidden");
+    form.classList.toggle("flex");
   };
 
   useEffect(() => {
@@ -58,7 +59,7 @@ const ShelvesPage: React.FC = () => {
           New Shelf
         </button>
         <form
-          className="bg-slate-700 p-2 flex flex-col gap-3 items-center rounded-lg shadow-lg absolute w-fit hidden"
+          className="bg-slate-700 p-2 flex-col gap-3 items-center rounded-lg shadow-lg absolute w-fit hidden"
           id="new-shelf-form"
           onSubmit={handleSubmit}
         >

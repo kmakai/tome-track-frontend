@@ -18,6 +18,7 @@ import ReadBooks from "./pages/ReadBooks";
 import ReadingNow from "./pages/ReadingNow";
 import SearchResultsPage from "./pages/SearchResultsPage";
 import LoginPage from "./pages/LoginPage";
+import RegisterPage from "./pages/RegisterPage";
 import ShelvesPage from "./pages/ShelvesPage";
 import { useEffect } from "react";
 
@@ -43,6 +44,7 @@ function App() {
             <Routes>
               <Route path="/" element={<Main />} />
               <Route path="/login" element={<LoginPage />} />
+              <Route path="/register" element={<RegisterPage />} />
               <Route path="/book/:id" element={<BookPage />} />'
               <Route path="/my-books" element={<MyBooks />} />
               <Route path="/my-books/favorites" element={<Favorites />} />

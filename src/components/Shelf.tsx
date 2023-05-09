@@ -6,9 +6,10 @@ import { useAppSelector, useAppDispatch } from "../hooks";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { refreshShelves } from "../features/userSlice";
+import { IBook, IShelf } from "../interfaces";
 
 interface shelfProps {
-  shelf: any;
+  shelf: IShelf;
 }
 
 const Shelf: React.FC<shelfProps> = ({ shelf }) => {
@@ -16,7 +17,7 @@ const Shelf: React.FC<shelfProps> = ({ shelf }) => {
   const dispatch = useAppDispatch();
 
   const { user } = useAppSelector((state) => state.user);
-  const config = user && {
+  const config: any = user && {
     headers: {
       Authorization: `Bearer ${user.token}`,
     },
@@ -59,12 +60,12 @@ const Shelf: React.FC<shelfProps> = ({ shelf }) => {
       </div>
 
       <div className="books grid grid-cols-2 justify-items-center gap-2 md:grid-cols-2 lg:grid-cols-3">
-        {shelf.books.map((book: any, index: number) => (
+        {shelf.books.map((book: IBook, index: number) => (
           <div className="flex flex-col" key={index}>
             <MyBookCard key={index} volume={book} />
             <button
               className="border-2 border-white text-white rounded-md p-1 text-center bg-slate-800 px-2 hover:bg-slate-700"
-              onClick={() => removeFromShelf(book._id, shelf._id)}
+              onClick={() => book._id && removeFromShelf(book._id, shelf._id)}
             >
               remove
             </button>

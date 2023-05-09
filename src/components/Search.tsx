@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { BiSearchAlt } from "react-icons/bi";
-import { useAppSelector, useAppDispatch } from "../hooks";
+import { useAppDispatch } from "../hooks";
 import { useNavigate } from "react-router-dom";
 import { getSearchResults, clearResults } from "../features/searchSlice";
 

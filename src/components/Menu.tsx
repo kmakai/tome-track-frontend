@@ -58,6 +58,7 @@ const Menu: React.FC = () => {
                   onClick={() => {
                     dispatch(logOut());
                   }}
+                  className="w-full"
                 >
                   Log out
                 </button>

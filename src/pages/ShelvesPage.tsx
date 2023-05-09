@@ -5,7 +5,7 @@ import axios from "axios";
 import { refreshShelves } from "../features/userSlice";
 import { toast } from "react-toastify";
 import { IShelf } from "../interfaces";
-
+const API_URI = "http://localhost:3000/api/v1";
 const ShelvesPage: React.FC = () => {
   const dispatch = useAppDispatch();
   const { myShelves } = useAppSelector((state) => state.user);
@@ -24,11 +24,7 @@ const ShelvesPage: React.FC = () => {
       description: formData.get("description") as string,
     };
 
-    const res = await axios.post(
-      "http://localhost:3000/api/v1/shelf/create",
-      shelf,
-      config
-    );
+    const res = await axios.post(API_URI + "/shelf/create", shelf, config);
 
     if (res.status === 201) {
       toast.success("Shelf Created");

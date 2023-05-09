@@ -7,6 +7,8 @@ import { refreshState } from "../features/userSlice";
 import { toast } from "react-toastify";
 import { IBook, IShelf } from "../interfaces";
 
+const API_URI = "http://localhost:3000/api/v1";
+
 const BookPage: React.FC = () => {
   const navigate = useNavigate();
   const { id } = useParams();
@@ -27,7 +29,7 @@ const BookPage: React.FC = () => {
 
   const saveBook = async () => {
     const res = await axios.post(
-      "http://localhost:3000/api/v1/books/save",
+      API_URI + "/books/save",
       {
         ...book,
         volumeId: id,
@@ -41,7 +43,7 @@ const BookPage: React.FC = () => {
 
   const addFavorite = async () => {
     const res = await axios.post(
-      "http://localhost:3000/api/v1/books/favorite/add",
+      API_URI + "/books/favorite/add",
       {
         volumeId: id,
       },
@@ -56,7 +58,7 @@ const BookPage: React.FC = () => {
 
   const addReadingNow = async () => {
     const res = await axios.post(
-      "http://localhost:3000/api/v1/books/reading/add",
+      API_URI + "/books/reading/add",
       {
         volumeId: id,
       },
@@ -71,7 +73,7 @@ const BookPage: React.FC = () => {
 
   const addRead = async () => {
     const res = await axios.post(
-      "http://localhost:3000/api/v1/books/read/add",
+      API_URI + "/books/read/add",
       {
         volumeId: id,
       },
@@ -93,7 +95,7 @@ const BookPage: React.FC = () => {
 
   const addToShelf = async (id: string) => {
     const res = await axios.post(
-      `http://localhost:3000/api/v1/shelf/${id}/add`,
+      API_URI + `/shelf/${id}/add`,
       {
         bookId: book.id,
       },

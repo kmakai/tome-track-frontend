@@ -5,7 +5,7 @@ import axios from "axios";
 import { refreshReadingNow } from "../features/userSlice";
 import { toast } from "react-toastify";
 import { IBook } from "../interfaces";
-
+const API_URI = "http://localhost:3000/api/v1";
 const ReadingNow: React.FC = () => {
   const dispatch = useAppDispatch();
   const { readingNow } = useAppSelector((state) => state.user);
@@ -20,7 +20,7 @@ const ReadingNow: React.FC = () => {
 
     try {
       const res = await axios.patch(
-        "http://localhost:3000/api/v1/books/reading/remove",
+        API_URI + "/books/reading/remove",
         {
           id: id,
         },

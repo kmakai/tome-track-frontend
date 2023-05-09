@@ -3,8 +3,9 @@ import MyBookCard from "../components/MyBookCard";
 import axios from "axios";
 import { useEffect } from "react";
 import { refreshMyBooks } from "../features/userSlice";
-import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { IBook } from "../interfaces";
+const API_URI = "http://localhost:3000/api/v1";
 
 const MyBooks: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -20,7 +21,7 @@ const MyBooks: React.FC = () => {
 
     try {
       const res = await axios.patch(
-        "http://localhost:3000/api/v1/books/delete",
+        API_URI + "/books/delete",
         {
           id: id,
         },
@@ -45,13 +46,13 @@ const MyBooks: React.FC = () => {
       <h2>My Books</h2>
       <div className="w-full grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 p-4 justify-items-center">
         {MyBooks &&
-          MyBooks.map((book: any) => (
+          MyBooks.map((book: IBook) => (
             <div className="flex flex-col" key={book.volumeId}>
               <MyBookCard key={book.volumeId} volume={book} />
               <button
                 className="border-2 border-white text-white rounded-md p-1 text-center bg-slate-800 px-2 hover:bg-slate-700"
                 onClick={() => {
-                  removeFromMyBooks(book._id);
+                  book._id && removeFromMyBooks(book._id);
                 }}
               >
                 remove

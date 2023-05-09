@@ -3,6 +3,8 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { IBook, IShelf, IUser } from "../interfaces";
 
+const API_URI = "http://localhost:3000/api/v1";
+
 interface UserState {
   user: IUser | null;
   myBooks: IBook[] | null;
@@ -24,10 +26,7 @@ const initialState: UserState = {
 export const login = createAsyncThunk(
   "user/login",
   async (formData: { email: string; password: string }) => {
-    const response = await axios.post(
-      "http://localhost:3000/api/v1/user/login",
-      formData
-    );
+    const response = await axios.post(API_URI + "/user/login", formData);
     localStorage.setItem("token", response.data.token);
     return response.data;
   }
@@ -41,11 +40,7 @@ export const saveBook = createAsyncThunk(
         Authorization: `Bearer ${token}`,
       },
     };
-    const response = await axios.post(
-      "http://localhost:3000/api/v1/user/saveBook",
-      book,
-      config
-    );
+    const response = await axios.post(API_URI + "/user/saveBook", book, config);
     return response.data;
   }
 );
@@ -58,10 +53,7 @@ export const refreshState = createAsyncThunk("user/refreshState", async () => {
         Authorization: `Bearer ${token}`,
       },
     };
-    const response = await axios.get(
-      "http://localhost:3000/api/v1/user/refresh",
-      config
-    );
+    const response = await axios.get(API_URI + "/user/refresh", config);
     response.data.token = token;
     return response.data;
   } else {
@@ -79,10 +71,7 @@ export const refreshShelves = createAsyncThunk(
           Authorization: `Bearer ${token}`,
         },
       };
-      const res = await axios.get(
-        "http://localhost:3000/api/v1/shelf/getAll",
-        config
-      );
+      const res = await axios.get(API_URI + "/shelf/getAll", config);
 
       return res.data.shelves;
     }
@@ -99,10 +88,7 @@ export const refreshMyBooks = createAsyncThunk(
           Authorization: `Bearer ${token}`,
         },
       };
-      const res = await axios.get(
-        "http://localhost:3000/api/v1/user/myBooks",
-        config
-      );
+      const res = await axios.get(API_URI + "/user/myBooks", config);
       return res.data.books;
     }
   }
@@ -118,10 +104,7 @@ export const refreshReadBooks = createAsyncThunk(
           Authorization: `Bearer ${token}`,
         },
       };
-      const res = await axios.get(
-        "http://localhost:3000/api/v1/user/readBooks",
-        config
-      );
+      const res = await axios.get(API_URI + "/user/readBooks", config);
       return res.data.books;
     }
   }
@@ -137,10 +120,7 @@ export const refreshFavorites = createAsyncThunk(
           Authorization: `Bearer ${token}`,
         },
       };
-      const res = await axios.get(
-        "http://localhost:3000/api/v1/user/myFavorites",
-        config
-      );
+      const res = await axios.get(API_URI + "/user/myFavorites", config);
       return res.data.books;
     }
   }
@@ -156,10 +136,7 @@ export const refreshReadingNow = createAsyncThunk(
           Authorization: `Bearer ${token}`,
         },
       };
-      const res = await axios.get(
-        "http://localhost:3000/api/v1/user/readingNow",
-        config
-      );
+      const res = await axios.get(API_URI + "/user/readingNow", config);
       return res.data.books;
     }
   }

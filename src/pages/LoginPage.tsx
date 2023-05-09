@@ -2,7 +2,9 @@ import React from "react";
 import { login } from "../features/userSlice";
 import { useAppDispatch } from "../hooks";
 import { useNavigate } from "react-router-dom";
-
+import { toast } from "react-toastify";
+import axios from "axios";
+const API_URI = "https://tome-track-backend-production.up.railway.app/api/v1";
 const LoginPage = () => {
   const dispatch = useAppDispatch();
   // const { user } = useAppSelector((state) => state.user);
@@ -14,6 +16,21 @@ const LoginPage = () => {
     const password = e.currentTarget.password.value;
     dispatch(login({ email, password }));
     navigate("/");
+  };
+
+  const handleGuestLogin = async () => {
+    try {
+      const res = await axios.post(API_URI + "/user/guestLogin");
+      if (res.status === 200) {
+        toast.success(res.data.message);
+
+        setTimeout(() => {
+          navigate("/");
+        }, 1000);
+      }
+    } catch (error: any) {
+      toast.error(error.response.data.message);
+    }
   };
 
   return (
@@ -44,14 +61,20 @@ const LoginPage = () => {
 
       <div className="flex flex-col gap-2 items-center p-4">
         <span className="text-xl font-bold text-slate-500">New Account</span>
-        <button className="border border-slate-300 rounded-md w-full py-2 bg-slate-700 text-white hover:bg-slate-600 focus:outline-none focus:ring-2 focus:ring-slate-600 focus:ring-offset-2 focus:ring-offset-  text-xl p-3">
+        <button
+          className="border border-slate-300 rounded-md w-full py-2 bg-slate-700 text-white hover:bg-slate-600 focus:outline-none focus:ring-2 focus:ring-slate-600 focus:ring-offset-2 focus:ring-offset-  text-xl p-3"
+          onClick={() => navigate("/register")}
+        >
           Register
         </button>
       </div>
 
       <div className="flex flex-col gap-2 items-center p-4">
         <span className="text-xl font-bold text-slate-500">try it out</span>
-        <button className="border border-slate-300 rounded-md w-full py-2 bg-slate-700 text-white hover:bg-slate-600 focus:outline-none focus:ring-2 focus:ring-slate-600 focus:ring-offset-2 focus:ring-offset-  text-xl p-3">
+        <button
+          onClick={() => handleGuestLogin()}
+          className="border border-slate-300 rounded-md w-full py-2 bg-slate-700 text-white hover:bg-slate-600 focus:outline-none focus:ring-2 focus:ring-slate-600 focus:ring-offset-2 focus:ring-offset-  text-xl p-3"
+        >
           Guest Login
         </button>
       </div>

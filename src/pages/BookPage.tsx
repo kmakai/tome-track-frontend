@@ -112,7 +112,7 @@ const BookPage: React.FC = () => {
           {book.title}
         </h1>
         <div>
-          {!saved && (
+          {!saved && user && (
             <button
               onClick={saveBook}
               className="border-2 border-white text-white rounded-md p-1 text-center bg-slate-800 px-2 hover:bg-slate-700"

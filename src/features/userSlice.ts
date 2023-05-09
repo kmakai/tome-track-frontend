@@ -157,6 +157,19 @@ const userSlice = createSlice({
       localStorage.removeItem("token");
       localStorage.removeItem("persist:root");
     },
+    GuestLogin(state, action) {
+      state.user = {
+        id: action.payload.user._id,
+        name: action.payload.user.name,
+        email: action.payload.user.email,
+        token: action.payload.token,
+      };
+      state.myBooks = action.payload.user.myBooks;
+      state.favorites = action.payload.user.favoriteBooks;
+      state.readBooks = action.payload.user.readBooks;
+      state.readingNow = action.payload.user.readingNow;
+      state.myShelves = action.payload.user.myShelves;
+    },
   },
   extraReducers(builder) {
     builder.addCase(login.fulfilled, (state, action) => {
@@ -207,6 +220,6 @@ const userSlice = createSlice({
   },
 });
 
-export const { logOut } = userSlice.actions;
+export const { logOut, GuestLogin } = userSlice.actions;
 
 export default userSlice.reducer;

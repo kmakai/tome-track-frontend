@@ -19,6 +19,7 @@ const Menu: React.FC = () => {
         className="menu-ul flex flex-col gap-4 p-4 text-white"
         onClick={toggleMenu}
       >
+        <span className="text-white text-xl text-center p-2">{user?.name}</span>
         <li>
           <Link to="/">Home</Link>
         </li>

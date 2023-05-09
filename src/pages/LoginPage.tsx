@@ -1,5 +1,5 @@
 import React from "react";
-import { login } from "../features/userSlice";
+import { login, GuestLogin } from "../features/userSlice";
 import { useAppDispatch } from "../hooks";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -23,7 +23,7 @@ const LoginPage = () => {
       const res = await axios.post(API_URI + "/user/guestLogin");
       if (res.status === 200) {
         toast.success(res.data.message);
-
+        dispatch(GuestLogin(res.data));
         setTimeout(() => {
           navigate("/");
         }, 1000);
